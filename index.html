@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.80, maximum-scale=0.80, user-scalable=no">
+  <title>Checklist UTIE</title>
+
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Checklist UTIe">
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border: #cbd5e1;
+    }
+
+    /* Variables para el Modo Oscuro */
+    body.dark-mode {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+    }
+    
+    * { box-sizing: border-box; }
+    
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 15px;
+      max-width: 1100px;
+      margin: 0 auto;
+      line-height: 1.5;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Encabezado con Logos */
+    header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 15px; 
+    }
+    header img { max-height: 65px; object-fit: contain; }
+    h1 { color: var(--primary); margin: 0; text-transform: uppercase; letter-spacing: 1px; font-size: 1.8rem; text-align: center; flex-grow: 1; }
+    
+    /* Títulos de Categorías y Subcategorías */
+    .section-title {
+      grid-column: 1 / -1;
+      background-color: var(--text-main);
+      color: var(--bg);
+      padding: 6px 15px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 6px;
+      margin-top: 5px;
+    }
+
+    .sub-section-title {
+      grid-column: 1 / -1;
+      background-color: #e2e8f0;
+      color: var(--text-main);
+      padding: 4px 15px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 4px;
+      text-align: center;
+      margin-top: -5px; 
+      border: 1px solid var(--border);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .card h2 {
+      font-size: 0.95rem;
+      margin-top: 0;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--primary);
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+
+    /* Formulario de Encabezado a dos columnas */
+    .header-form { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 20px; 
+    }
+    .header-col { display: flex; flex-direction: column; gap: 10px; }
+    .form-group { display: flex; flex-direction: column; }
+    .form-group label { font-size: 0.8rem; font-weight: bold; color: var(--text-muted); text-transform: uppercase; }
+    .form-group input, textarea {
+      padding: 6px; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; font-size: 0.95rem;
+      background-color: var(--card-bg); color: var(--text-main);
+    }
+    textarea { min-height: 60px; resize: vertical; }
+
+    /* Estilos para el Precinto */
+    .precinto-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .precinto-group label {
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: var(--primary);
+      text-transform: uppercase;
+    }
+    .precinto-input {
+      flex-grow: 1;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.85rem;
+      background: var(--bg);
+      color: var(--text-main);
+      font-weight: bold;
+    }
+    .precinto-input:focus { outline: none; border-color: var(--primary); }
+
+    /* Items del Checklist */
+    .check-item {
+      display: flex; align-items: center; padding: 4px 0; border-bottom: 1px dashed var(--border); cursor: pointer;
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-item input[type="checkbox"] {
+      width: 16px; height: 16px; margin-right: 8px; accent-color: var(--primary);
+    }
+    .check-item .label-text { flex-grow: 1; font-size: 0.85rem; }
+    
+    /* Cantidades Editables */
+    .qty-input {
+      width: 50px;
+      padding: 2px 4px;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg);
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+    .qty-input:focus { outline: none; border-color: var(--primary); background: #fff; }
+
+    /* BOTONES FLOTANTES */
+    .fab-container {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 1000;
+    }
+    
+    .fab-btn {
+      width: 55px; height: 55px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s, box-shadow 0.2s; color: white;
+    }
+    .fab-btn:hover { transform: scale(1.1); box-shadow: 0 6px 14px rgba(0,0,0,0.4); }
+    .fab-btn svg { width: 24px; height: 24px; fill: white; }
+    
+    .bg-red { background-color: #ef4444; }
+    .bg-dark { background-color: #374151; }
+    .bg-green { background-color: #22c55e; }
+    .bg-orange { background-color: #f59e0b; }
+
+    /* =========================================
+       DISEÑO IMPRESIÓN SÚPER COMPRIMIDO (1 PÁGINA)
+       ========================================= */
+    @media print {
+      @page { size: A4; margin: 4mm; } 
+      
+      body { 
+        background: white; padding: 0; font-size: 7.5px; line-height: 1.05; 
+        color: #0f172a; max-width: 100%; 
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+      
+      .fab-container { display: none; } 
+      
+      header { margin-bottom: 2px; padding-bottom: 2px; border-bottom: 1.5px solid var(--primary); }
+      header img { max-height: 25px; } 
+      h1 { color: var(--primary); font-size: 12px; font-weight: 800; letter-spacing: 1px; margin: 0; padding: 0; }
+      
+      .header-form { 
+        margin-bottom: 3px; border: 1px solid #e2e8f0; border-radius: 4px; 
+        padding: 3px 6px; gap: 6px; background-color: #f8fafc !important;
+      }
+      .header-col { gap: 2px; }
+      .form-group label { font-size: 6px; margin-bottom: 0px; color: #475569;}
+      .form-group input, textarea { 
+        border: none; border-bottom: 1px dashed #cbd5e1; border-radius: 0; 
+        padding: 0; font-size: 7.5px; background: transparent !important; color: #0f172a !important; font-weight: bold;
+      }
+      
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-bottom: 3px; }
+
+      .section-title {
+        grid-column: 1 / -1; background-color: #1e293b !important; color: white !important; 
+        padding: 2px 6px; margin-top: 1px; font-size: 8.5px; border-radius: 3px; text-align: left; border: none;
+      }
+
+      .sub-section-title {
+        grid-column: 1 / -1; background-color: #e2e8f0 !important; color: #1e293b !important; 
+        padding: 1.5px 6px; margin-top: 0px; font-size: 8px; border-radius: 3px; text-align: left; border: none; font-weight: bold;
+      }
+      
+      .card { 
+        border: 1px solid #cbd5e1; border-radius: 4px; 
+        padding: 3px 5px; box-shadow: none; break-inside: avoid; background-color: white !important;
+      }
+      .card h2 { 
+        color: var(--primary); border-bottom: 1px solid #e2e8f0; 
+        font-size: 8px; padding-bottom: 1px; margin-bottom: 2px; background: transparent; 
+      }
+
+      /* Precinto para impresión */
+      .precinto-group { margin-bottom: 3px; padding-bottom: 3px; border-bottom: 1px solid #e2e8f0; }
+      .precinto-group label { font-size: 7px; color: var(--primary); }
+      .precinto-input { border: none; border-bottom: 1px dotted #cbd5e1; font-size: 7.5px; padding: 0; height: auto; }
+      
+      .check-item { border-bottom: 1px solid #f1f5f9; padding: 1px 0; }
+      .check-item:last-child { border-bottom: none; }
+      .check-item input[type="checkbox"] { width: 8px; height: 8px; margin-right: 3px; accent-color: var(--primary); }
+      .check-item .label-text { font-size: 7px; color: #0f172a; }
+      
+      .qty-input { 
+        border: 1px solid #e2e8f0; background-color: #f8fafc !important; 
+        border-radius: 3px; width: 22px; padding: 0; font-size: 6.5px; 
+        height: auto; color: #0f172a !important; text-align: center;
+      }
+
+      textarea { min-height: 15px; height: 15px; border-bottom: 1px solid #cbd5e1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fab-container">
+    <button class="fab-btn bg-red" onclick="limpiarChecklist()" title="Limpiar Turno">
+      <svg viewBox="0 0 24 24"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+    </button>
+    <button class="fab-btn bg-dark" onclick="toggleDarkMode()" title="Modo Oscuro">
+      <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+    </button>
+    <button class="fab-btn bg-orange" onclick="window.print()" title="Descargar / Imprimir">
+      <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    </button>
+  </div>
+
+  <header>
+    <img src="https://i.imgur.com/GXTFolo.png" alt="Logo SAME">
+    <h1>Checklist UTIe</h1>
+    <img src="https://i.imgur.com/W5Mo4rc.png" alt="Logo ECUES">
+  </header>
+
+  <div class="header-form card">
+    <div class="header-col">
+      <div class="form-group"><label>Fecha</label><input type="date" id="fecha"></div>
+      <div class="form-group"><label>Agente</label><input type="text" id="agente"></div>
+    </div>
+    <div class="header-col">
+      <div class="form-group"><label>Nivel de carga de Batería</label><input type="text" id="bateria"></div>
+      <div class="form-group"><label>Nivel de KM Autonomía</label><input type="text" id="km"></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    
+    <div class="section-title">LATERALES</div>
+
+    <div class="card">
+      <h2>Lateral Derecho</h2>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Tabla espinal</span><input type="text" class="qty-input" value="4"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Silla de ruedas</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Tubo oxígeno chico</span><input type="text" class="qty-input" value="4"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Tubo oxígeno grande</span><input type="text" class="qty-input" value="4"></label>
+    </div>
+
+    <div class="card">
+      <h2>Lateral Izquierdo</h2>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Collar cervical (P,S,M,L,XL)</span><input type="text" class="qty-input" value="10"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Conos de tránsito</span><input type="text" class="qty-input" value="3"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Bancos rojos</span><input type="text" class="qty-input" value="4"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Chalecos Kendrick</span><input type="text" class="qty-input" value="4"></label>
+    </div>
+
+    <div style="visibility: hidden; display: none;" class="card"></div> 
+
+    <div class="section-title">ATRÁS</div>
+
+    <div class="card">
+      <h2>MEDIO</h2>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Boca oxigeno + máscara</span><input type="text" class="qty-input" value="6"></label>
+    </div>
+
+    <div class="card">
+      <h2>Cajón 1</h2>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Máscara oxigeno (adulto con reservório)</span><input type="text" class="qty-input" value="10"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Máscara oxigeno (nebulización)</span><input type="text" class="qty-input" value="10"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Máscara oxigeno (pediátrica)</span><input type="text" class="qty-input" value="10"></label>
+    </div>
+
+    <div class="card">
+      <h2>Cajón 2</h2>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Manta térmica</span><input type="text" class="qty-input" value="8"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Barbijos</span><input type="text" class="qty-input" value="1 paq"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Bolsas rojas</span><input type="text" class="qty-input" value=">5"></label>
+    </div>
+
+    <div class="card">
+      <h2>Cajón 3</h2>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Vendas</span><input type="text" class="qty-input" value=">30"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Apósitos</span><input type="text" class="qty-input" value="9"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Gasas</span><input type="text" class="qty-input" value=">20"></label>
+    </div>
+      
+    <div class="card">
+      <h2>Cajón 4</h2>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Solución fisiológica</span><input type="text" class="qty-input" value="10"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Dextrosado</span><input type="text" class="qty-input" value="6"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Abbocath</span><input type="text" class="qty-input" value="1 paq"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Guías de suero</span><input type="text" class="qty-input" value="1 paq"></label>
+    </div>
+
+    <div class="sub-section-title">MUEBLE SUPERIOR</div>
+    
+    <div class="card">
+      <h2>Bolso Verde 1</h2>
+      <div class="precinto-group">
+        <label>Nº de Precinto:</label>
+        <input type="text" id="precinto-v1" class="precinto-input" placeholder="Ej: 12345">
+      </div>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Gasas, vendas</span><input type="text" class="qty-input" value=">10"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Collares cervical (P,S,M,L,XL)</span><input type="text" class="qty-input" value="6"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Bolsas de esterilización</span><input type="text" class="qty-input" value="2"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Solución fisiológica</span><input type="text" class="qty-input" value="2"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Dextrosado</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Bolso azul - férulas</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Manta térmica</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Abbocath</span><input type="text" class="qty-input" value=">5"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Macrogoteo</span><input type="text" class="qty-input" value="3"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Bolsas rojas</span><input type="text" class="qty-input" value="5"></label>
+    </div>
+
+    <div class="card">
+      <h2>Bolso Verde 2</h2>
+      <div class="precinto-group">
+        <label>Nº de Precinto:</label>
+        <input type="text" id="precinto-v2" class="precinto-input" placeholder="Ej: 67890">
+      </div>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Ambú adulto</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Ambú pediátrico</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Dextrosado</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Solución fisiológica</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Estuche Laringoscopio + ramas</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Tubos endotraqueales</span><input type="text" class="qty-input" value="6"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Cánulas mayo/orofaringeas</span><input type="text" class="qty-input" value="4"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Máscaras oxígeno</span><input type="text" class="qty-input" value="4"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Gasas, vendas</span><input type="text" class="qty-input" value=">10"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Abbocath</span><input type="text" class="qty-input" value=">5"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Macrogoteo</span><input type="text" class="qty-input" value="3"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Manta térmica</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Barbijos micromask</span><input type="text" class="qty-input" value="2"></label>
+    </div>
+
+    <div class="card">
+      <h2>SUPERIOR</h2>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Inmovilizadores laterales</span><input type="text" class="qty-input" value="5"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Collar cervical (P,S,M,L,XL)</span><input type="text" class="qty-input" value="9"></label>
+    </div>
+
+    <div class="section-title">INTERIOR</div>
+
+    <div class="card">
+      <h2>Interior</h2>
+      <div class="precinto-group">
+        <label>Nº Precinto Cardio:</label>
+        <input type="text" id="precinto-cardio" class="precinto-input" placeholder="Ej: 11223">
+      </div>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Cardio</span><input type="text" class="qty-input" value="Funciona"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Monitores x2</span><input type="text" class="qty-input" value="Funciona"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">1 PC</span><input type="text" class="qty-input" value="Funciona"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Teclado / Mouse</span><input type="text" class="qty-input" value="Funciona"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">1 Control remoto</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">1 Cable alargue</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">1 Matafuegos</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">1 Silla</span><input type="text" class="qty-input" value="1"></label>
+    </div>
+
+    <div class="card">
+      <h2>Mueble</h2>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Alcohol</span><input type="text" class="qty-input" value="1"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Aguas oxigenadas</span><input type="text" class="qty-input" value="2"></label>
+      <label class="check-item"><input type="checkbox"><span class="label-text">Cajas guantes (S,M,L)</span><input type="text" class="qty-input" value="3"></label>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom: 0;">
+    <div class="form-group" style="margin-bottom: 0;">
+      <label>Observaciones</label>
+      <textarea id="observaciones" placeholder="Escribe aquí las novedades..."></textarea>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Aplicar modo oscuro si estaba activado previamente
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+      }
+
+      // Guardado automático dinámico
+      const inputs = document.querySelectorAll('input:not(#fecha):not(#agente):not(#bateria):not(#km), textarea:not(#observaciones)');
+      
+      inputs.forEach((input, index) => {
+        if (!input.id) input.id = 'field-dinamico-' + index;
+
+        const savedValue = localStorage.getItem(input.id);
+        if (savedValue !== null) {
+          if (input.type === 'checkbox') {
+            input.checked = savedValue === 'true';
+          } else {
+            input.value = savedValue;
+          }
+        }
+
+        input.addEventListener('change', () => {
+          const valueToSave = input.type === 'checkbox' ? input.checked : input.value;
+          localStorage.setItem(input.id, valueToSave);
+        });
+      });
+
+      // Guardar inputs del header explícitamente
+      const headerIds = ['fecha', 'agente', 'bateria', 'km', 'observaciones'];
+      headerIds.forEach(id => {
+        const input = document.getElementById(id);
+        if(input) {
+          const saved = localStorage.getItem(id);
+          if(saved) input.value = saved;
+          input.addEventListener('change', () => localStorage.setItem(id, input.value));
+        }
+      });
+    });
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    }
+
+    function limpiarChecklist() {
+      if (confirm('¿Estás seguro de limpiar todos los datos para un nuevo turno?')) {
+        localStorage.clear();
+        location.reload(); 
+      }
+    }
+
+    // Función arreglada de WhatsApp (Ahora incluye todos los precintos)
+    function enviarWhatsApp() {
+      const fecha = document.getElementById('fecha').value || "Sin especificar";
+      const agente = document.getElementById('agente').value || "Sin especificar";
+      const bateria = document.getElementById('bateria').value || "-";
+      const km = document.getElementById('km').value || "-";
+      const precinto1 = document.getElementById('precinto-v1').value || "No ingresado";
+      const precinto2 = document.getElementById('precinto-v2').value || "No ingresado";
+      const precintoCardio = document.getElementById('precinto-cardio').value || "No ingresado";
+      const observaciones = document.getElementById('observaciones').value || "Ninguna.";
+
+      let faltantes = [];
+      document.querySelectorAll('.check-item').forEach(item => {
+        const checkbox = item.querySelector('input[type="checkbox"]');
+        const label = item.querySelector('.label-text').innerText.trim();
+        if (!checkbox.checked) {
+          faltantes.push(label);
+        }
+      });
+
+      let texto = `*REPORTE CHECKLIST UTIe*\n`;
+      texto += `📅 *Fecha:* ${fecha}\n`;
+      texto += `👨‍⚕️ *Agente:* ${agente}\n`;
+      texto += `🔋 *Batería:* ${bateria} | 🛣️ *KM:* ${km}\n\n`;
+      
+      texto += `🔒 *PRESCINTOS:*\n`;
+      texto += `🎒 Bolso Verde 1: ${precinto1}\n`;
+      texto += `🎒 Bolso Verde 2: ${precinto2}\n`;
+      texto += `🫀 Cardio: ${precintoCardio}\n\n`;
+
+      if (faltantes.length > 0) {
+        texto += `⚠️ *ELEMENTOS FALTANTES / INCOMPLETOS:* \n`;
+        faltantes.forEach(f => {
+          texto += `- ${f}\n`;
+        });
+        texto += `\n`;
+      } else {
+        texto += `✅ *Checklist completo. Sin faltantes.*\n\n`;
+      }
+
+      texto += `📝 *Observaciones:*\n${observaciones}`;
+
+      const textoCodificado = encodeURIComponent(texto);
+      window.open(`https://wa.me/?text=${textoCodificado}`, '_blank');
+    }
+  </script>
+</body>
+</html>
