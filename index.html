@@ -23,7 +23,6 @@
       --border: #cbd5e1;
     }
 
-    /* Variables para el Modo Oscuro */
     body.dark-mode {
       --bg: #0f172a;
       --card-bg: #1e293b;
@@ -45,7 +44,6 @@
       transition: background-color 0.3s, color 0.3s;
     }
 
-    /* Encabezado con Logos */
     header { 
       display: flex; 
       justify-content: space-between; 
@@ -55,7 +53,6 @@
     header img { max-height: 65px; object-fit: contain; }
     h1 { color: var(--primary); margin: 0; text-transform: uppercase; letter-spacing: 1px; font-size: 1.8rem; text-align: center; flex-grow: 1; }
     
-    /* Títulos de Categorías y Subcategorías */
     .section-title {
       grid-column: 1 / -1;
       background-color: var(--text-main);
@@ -108,7 +105,6 @@
       text-transform: uppercase;
     }
 
-    /* Formulario de Encabezado a dos columnas */
     .header-form { 
       display: grid; 
       grid-template-columns: 1fr 1fr; 
@@ -123,7 +119,6 @@
     }
     textarea { min-height: 60px; resize: vertical; }
 
-    /* Estilos para el Precinto */
     .precinto-group {
       display: flex;
       align-items: center;
@@ -150,7 +145,6 @@
     }
     .precinto-input:focus { outline: none; border-color: var(--primary); }
 
-    /* Items del Checklist */
     .check-item {
       display: flex; align-items: center; padding: 4px 0; border-bottom: 1px dashed var(--border); cursor: pointer;
     }
@@ -160,7 +154,6 @@
     }
     .check-item .label-text { flex-grow: 1; font-size: 0.85rem; }
     
-    /* Cantidades Editables */
     .qty-input {
       width: 50px;
       padding: 2px 4px;
@@ -175,7 +168,6 @@
     }
     .qty-input:focus { outline: none; border-color: var(--primary); background: #fff; }
 
-    /* BOTONES FLOTANTES */
     .fab-container {
       position: fixed;
       right: 20px;
@@ -199,9 +191,6 @@
     .bg-green { background-color: #22c55e; }
     .bg-orange { background-color: #f59e0b; }
 
-    /* =========================================
-       DISEÑO IMPRESIÓN SÚPER COMPRIMIDO (1 PÁGINA)
-       ========================================= */
     @media print {
       @page { size: A4; margin: 4mm; } 
       
@@ -249,7 +238,6 @@
         font-size: 8px; padding-bottom: 1px; margin-bottom: 2px; background: transparent; 
       }
 
-      /* Precinto para impresión */
       .precinto-group { margin-bottom: 3px; padding-bottom: 3px; border-bottom: 1px solid #e2e8f0; }
       .precinto-group label { font-size: 7px; color: var(--primary); }
       .precinto-input { border: none; border-bottom: 1px dotted #cbd5e1; font-size: 7.5px; padding: 0; height: auto; }
@@ -440,12 +428,10 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Aplicar modo oscuro si estaba activado previamente
       if (localStorage.getItem('darkMode') === 'true') {
         document.body.classList.add('dark-mode');
       }
 
-      // Guardado automático dinámico
       const inputs = document.querySelectorAll('input:not(#fecha):not(#agente):not(#bateria):not(#km), textarea:not(#observaciones)');
       
       inputs.forEach((input, index) => {
@@ -466,7 +452,6 @@
         });
       });
 
-      // Guardar inputs del header explícitamente
       const headerIds = ['fecha', 'agente', 'bateria', 'km', 'observaciones'];
       headerIds.forEach(id => {
         const input = document.getElementById(id);
@@ -490,7 +475,6 @@
       }
     }
 
-    // Función arreglada de WhatsApp (Ahora incluye todos los precintos)
     function enviarWhatsApp() {
       const fecha = document.getElementById('fecha').value || "Sin especificar";
       const agente = document.getElementById('agente').value || "Sin especificar";
