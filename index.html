@@ -192,7 +192,10 @@
     .bg-orange { background-color: #f59e0b; }
 
     @media print {
-      @page { size: A4; margin: 2mm 5mm; }
+      @page { 
+        size: A4; 
+        margin: 4mm 8mm; 
+      }
       
       body { 
         background: white; padding: 0; 
@@ -204,9 +207,9 @@
       }
       
       .fab-container { display: none; } 
-      
+            
       header { margin-bottom: 3px; padding-bottom: 2px; border-bottom: 1.5px solid var(--primary); }
-      header img { max-height: 20px; } 
+      header img { max-height: 40px; }
       h1 { color: var(--primary); font-size: 13px; font-weight: 800; letter-spacing: 1px; margin: 0; padding: 0; }
       
       .header-form { 
@@ -259,8 +262,18 @@
       textarea { min-height: 18px; height: 18px; border-bottom: 1px solid #cbd5e1; }
 
       label[for="foto-interior"], button[onclick="borrarFoto()"] { display: none !important; }
-      #preview-container { display: block; margin-top: 2px !important; }
-      #foto-preview { width: auto !important; max-width: 100%; max-height: 60px !important; object-fit: contain; margin: 0 auto; display: block; border-radius: 2px; }
+      #preview-container { display: block; margin-top: 4px !important; }
+      
+      #foto-preview { 
+        width: auto !important; 
+        max-width: 100%; 
+        max-height: 120px !important;
+        object-fit: contain; 
+        margin: 0 auto; 
+        display: block; 
+        border-radius: 4px; 
+        border: 1px solid var(--border);
+      }
     }
   </style>
 </head>
