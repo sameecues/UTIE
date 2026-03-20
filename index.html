@@ -22,8 +22,7 @@
       --text-muted: #64748b;
       --border: #cbd5e1;
     }
-
-    /* Variables para el Modo Oscuro */
+    
     body.dark-mode {
       --bg: #0f172a;
       --card-bg: #1e293b;
@@ -44,8 +43,7 @@
       line-height: 1.5;
       transition: background-color 0.3s, color 0.3s;
     }
-
-    /* Encabezado con Logos */
+   
     header { 
       display: flex; 
       justify-content: space-between; 
@@ -54,8 +52,7 @@
     }
     header img { max-height: 65px; object-fit: contain; }
     h1 { color: var(--primary); margin: 0; text-transform: uppercase; letter-spacing: 1px; font-size: 1.8rem; text-align: center; flex-grow: 1; }
-    
-    /* Títulos de Categorías y Subcategorías */
+
     .section-title {
       grid-column: 1 / -1;
       background-color: var(--text-main);
@@ -108,7 +105,6 @@
       text-transform: uppercase;
     }
 
-    /* Formulario de Encabezado a dos columnas */
     .header-form { 
       display: grid; 
       grid-template-columns: 1fr 1fr; 
@@ -123,7 +119,6 @@
     }
     textarea { min-height: 60px; resize: vertical; }
 
-    /* Estilos para el Precinto */
     .precinto-group {
       display: flex;
       align-items: center;
@@ -150,7 +145,6 @@
     }
     .precinto-input:focus { outline: none; border-color: var(--primary); }
 
-    /* Items del Checklist */
     .check-item {
       display: flex; align-items: center; padding: 4px 0; border-bottom: 1px dashed var(--border); cursor: pointer;
     }
@@ -159,8 +153,7 @@
       width: 16px; height: 16px; margin-right: 8px; accent-color: var(--primary);
     }
     .check-item .label-text { flex-grow: 1; font-size: 0.85rem; }
-    
-    /* Cantidades Editables */
+
     .qty-input {
       width: 50px;
       padding: 2px 4px;
@@ -175,7 +168,6 @@
     }
     .qty-input:focus { outline: none; border-color: var(--primary); background: #fff; }
 
-    /* BOTONES FLOTANTES */
     .fab-container {
       position: fixed;
       right: 20px;
@@ -199,78 +191,74 @@
     .bg-green { background-color: #22c55e; }
     .bg-orange { background-color: #f59e0b; }
 
-    /* =========================================
-       DISEÑO IMPRESIÓN SÚPER COMPRIMIDO (1 PÁGINA)
-       ========================================= */
     @media print {
-      @page { size: A4; margin: 4mm; } 
+      @page { size: A4; margin: 2mm; }
       
       body { 
-        background: white; padding: 0; font-size: 7.5px; line-height: 1.05; 
+        background: white; padding: 0; font-size: 6.5px; line-height: 1; 
         color: #0f172a; max-width: 100%; 
         -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        zoom: 0.92;
       }
       
       .fab-container { display: none; } 
       
-      header { margin-bottom: 2px; padding-bottom: 2px; border-bottom: 1.5px solid var(--primary); }
-      header img { max-height: 25px; } 
-      h1 { color: var(--primary); font-size: 12px; font-weight: 800; letter-spacing: 1px; margin: 0; padding: 0; }
+      header { margin-bottom: 2px; padding-bottom: 1px; border-bottom: 1px solid var(--primary); }
+      header img { max-height: 18px; } 
+      h1 { color: var(--primary); font-size: 11px; font-weight: 800; letter-spacing: 0px; margin: 0; padding: 0; }
       
       .header-form { 
-        margin-bottom: 3px; border: 1px solid #e2e8f0; border-radius: 4px; 
-        padding: 3px 6px; gap: 6px; background-color: #f8fafc !important;
+        margin-bottom: 2px; border: 1px solid #e2e8f0; border-radius: 2px; 
+        padding: 2px 4px; gap: 4px; background-color: #f8fafc !important;
       }
-      .header-col { gap: 2px; }
-      .form-group label { font-size: 6px; margin-bottom: 0px; color: #475569;}
+      .header-col { gap: 1px; }
+      .form-group label { font-size: 5.5px; margin-bottom: 0px; color: #475569;}
       .form-group input, textarea { 
         border: none; border-bottom: 1px dashed #cbd5e1; border-radius: 0; 
-        padding: 0; font-size: 7.5px; background: transparent !important; color: #0f172a !important; font-weight: bold;
+        padding: 0; font-size: 6.5px; background: transparent !important; color: #0f172a !important; font-weight: bold;
       }
       
-      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-bottom: 3px; }
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 2px; }
 
       .section-title {
         grid-column: 1 / -1; background-color: #1e293b !important; color: white !important; 
-        padding: 2px 6px; margin-top: 1px; font-size: 8.5px; border-radius: 3px; text-align: left; border: none;
+        padding: 1px 4px; margin-top: 1px; font-size: 7px; border-radius: 2px; text-align: left; border: none;
       }
 
       .sub-section-title {
         grid-column: 1 / -1; background-color: #e2e8f0 !important; color: #1e293b !important; 
-        padding: 1.5px 6px; margin-top: 0px; font-size: 8px; border-radius: 3px; text-align: left; border: none; font-weight: bold;
+        padding: 1px 4px; margin-top: 0px; font-size: 6.5px; border-radius: 2px; text-align: left; border: none; font-weight: bold;
       }
       
       .card { 
-        border: 1px solid #cbd5e1; border-radius: 4px; 
-        padding: 3px 5px; box-shadow: none; break-inside: avoid; background-color: white !important;
+        border: 1px solid #cbd5e1; border-radius: 2px; 
+        padding: 2px 4px; box-shadow: none; break-inside: avoid; background-color: white !important;
       }
       .card h2 { 
         color: var(--primary); border-bottom: 1px solid #e2e8f0; 
-        font-size: 8px; padding-bottom: 1px; margin-bottom: 2px; background: transparent; 
+        font-size: 6.5px; padding-bottom: 1px; margin-bottom: 1px; background: transparent; 
       }
-
-      /* Precinto para impresión */
-      .precinto-group { margin-bottom: 3px; padding-bottom: 3px; border-bottom: 1px solid #e2e8f0; }
-      .precinto-group label { font-size: 7px; color: var(--primary); }
-      .precinto-input { border: none; border-bottom: 1px dotted #cbd5e1; font-size: 7.5px; padding: 0; height: auto; }
       
-      .check-item { border-bottom: 1px solid #f1f5f9; padding: 1px 0; }
+      .precinto-group { margin-bottom: 1px; padding-bottom: 1px; border-bottom: 1px solid #e2e8f0; gap: 4px;}
+      .precinto-group label { font-size: 5.5px; color: var(--primary); }
+      .precinto-input { border: none; border-bottom: 1px dotted #cbd5e1; font-size: 6px; padding: 0; height: auto; }
+      
+      .check-item { border-bottom: 1px solid #f1f5f9; padding: 0.5px 0; }
       .check-item:last-child { border-bottom: none; }
-      .check-item input[type="checkbox"] { width: 8px; height: 8px; margin-right: 3px; accent-color: var(--primary); }
-      .check-item .label-text { font-size: 7px; color: #0f172a; }
+      .check-item input[type="checkbox"] { width: 6px; height: 6px; margin-right: 2px; accent-color: var(--primary); }
+      .check-item .label-text { font-size: 5.5px; color: #0f172a; }
       
       .qty-input { 
         border: 1px solid #e2e8f0; background-color: #f8fafc !important; 
-        border-radius: 3px; width: 22px; padding: 0; font-size: 6.5px; 
+        border-radius: 2px; width: 16px; padding: 0; font-size: 5px; 
         height: auto; color: #0f172a !important; text-align: center;
       }
 
-      textarea { min-height: 15px; height: 15px; border-bottom: 1px solid #cbd5e1; }
-
-      /* Ajustes para la foto al imprimir */
+      textarea { min-height: 12px; height: 12px; border-bottom: 1px solid #cbd5e1; }
+      
       label[for="foto-interior"], button[onclick="borrarFoto()"] { display: none !important; }
-      #preview-container { display: block; margin-top: 2px !important; }
-      #foto-preview { max-height: 70px !important; width: auto; margin: 0 auto; display: block; }
+      #preview-container { display: block; margin-top: 1px !important; }
+      #foto-preview { max-height: 45px !important; width: auto; margin: 0 auto; display: block; }
     }
   </style>
 </head>
@@ -463,12 +451,10 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Aplicar modo oscuro si estaba activado previamente
       if (localStorage.getItem('darkMode') === 'true') {
         document.body.classList.add('dark-mode');
       }
 
-      // Guardado automático dinámico
       const inputs = document.querySelectorAll('input:not(#fecha):not(#agente):not(#bateria):not(#km):not(#foto-interior), textarea:not(#observaciones)');
       
       inputs.forEach((input, index) => {
@@ -489,7 +475,6 @@
         });
       });
 
-      // Guardar inputs del header explícitamente
       const headerIds = ['fecha', 'agente', 'bateria', 'km', 'observaciones'];
       headerIds.forEach(id => {
         const input = document.getElementById(id);
@@ -499,23 +484,21 @@
           input.addEventListener('change', () => localStorage.setItem(id, input.value));
         }
       });
-
-      // CARGAR FOTO GUARDADA EN LOCALSTORAGE
+      
       const fotoGuardada = localStorage.getItem('foto-interior-data');
       if (fotoGuardada) {
         document.getElementById('foto-preview').src = fotoGuardada;
         document.getElementById('preview-container').style.display = 'block';
       }
     });
-
-    // LÓGICA PARA LA FOTO (Compresión y guardado)
+    
     document.getElementById('foto-interior').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (!file) return;
 
       const reader = new FileReader();
       reader.onload = function(event) {
-        // Redimensionar para que no sature la memoria
+        
         const img = new Image();
         img.onload = function() {
           const canvas = document.createElement('canvas');
@@ -534,7 +517,6 @@
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
           
-          // Comprimir a JPEG
           const dataUrl = canvas.toDataURL('image/jpeg', 0.6); 
           
           document.getElementById('foto-preview').src = dataUrl;
@@ -570,7 +552,6 @@
       }
     }
 
-    // Función arreglada de WhatsApp
     function enviarWhatsApp() {
       const fecha = document.getElementById('fecha').value || "Sin especificar";
       const agente = document.getElementById('agente').value || "Sin especificar";
