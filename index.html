@@ -208,15 +208,67 @@
     .bg-dark { background-color: #374151; }
     .bg-orange { background-color: #f59e0b; }
 
+    /* =========================================
+       DISEÑO IMPRESIÓN SÚPER COMPRIMIDO PARA 1 PÁGINA
+       ========================================= */
     @media print {
-      @page { size: A4; margin: 4mm 8mm; }
-      body { background: white; padding: 0; font-size: 8px; line-height: 1.1; color: #0f172a; zoom: 0.95; }
+      @page { size: A4; margin: 3mm 5mm; }
+      
+      body { 
+        background: white; padding: 0; 
+        font-size: 7.5px; 
+        line-height: 1.05; 
+        color: #0f172a; 
+        max-width: 100%;
+        zoom: 0.88; /* Forzamos una reducción mayor para el navegador */
+      }
+      
       .fab-container, .btn-select-all { display: none !important; } 
-      header img { max-height: 40px; }
-      h1 { font-size: 13px; }
-      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
-      .card { padding: 3px 5px; break-inside: avoid; }
-      #foto-preview { max-height: 120px !important; }
+      
+      header { margin-bottom: 2px; padding-bottom: 2px; border-bottom: 1.5px solid var(--primary); }
+      header img { max-height: 30px; }
+      h1 { font-size: 13px; margin: 0; padding: 0;}
+      
+      .header-form { 
+        margin-bottom: 2px; border: 1px solid #e2e8f0; border-radius: 3px; 
+        padding: 3px 6px; gap: 4px; background-color: #f8fafc !important;
+      }
+      .header-col { gap: 2px; }
+      .form-group label { font-size: 6.5px; margin-bottom: 0px;}
+      .form-group input, textarea { 
+        border: none; border-bottom: 1px dashed #cbd5e1; border-radius: 0; 
+        padding: 0; font-size: 8px; background: transparent !important; color: #0f172a !important; font-weight: bold;
+      }
+      
+      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 2px; }
+      
+      .section-title { padding: 2px 6px; margin-top: 1px; font-size: 8.5px; border-radius: 2px; }
+      .sub-section-title { padding: 1.5px 6px; margin-top: 1px; font-size: 8px; border-radius: 2px; }
+      
+      .card { padding: 3px 4px; border: 1px solid #cbd5e1; border-radius: 3px; break-inside: avoid; }
+      
+      /* APLASTAMOS EL ESPACIO QUE GENERA EL CARD-HEADER AL IMPRIMIR */
+      .card-header { padding-bottom: 1px; margin-bottom: 2px; border-bottom: 1px solid #e2e8f0; }
+      .card h2 { font-size: 8px; padding-bottom: 0;}
+
+      .precinto-group { margin-bottom: 2px; padding-bottom: 1px; border-bottom: 1px solid #e2e8f0; gap: 3px;}
+      .precinto-group label { font-size: 8px; }
+      .precinto-input { font-size: 8px; border: none; border-bottom: 1px dotted #cbd5e1; padding: 0; height: auto;}
+      
+      .check-item { border-bottom: 1px solid #f1f5f9; padding: 0.5px 0; }
+      .check-item:last-child { border-bottom: none; }
+      .check-item input[type="checkbox"] { width: 8px; height: 8px; margin-right: 3px; }
+      .check-item .label-text { font-size: 7.5px; color: #0f172a; }
+      .qty-input { border: 1px solid #e2e8f0; border-radius: 2px; width: 20px; padding: 0; font-size: 7.5px; height: auto; }
+
+      .card[style="margin-top:10px;"] { margin-top: 2px !important; }
+      textarea { min-height: 14px; height: 14px; border-bottom: 1px solid #cbd5e1; }
+
+      label[for="foto-interior"] { display: none !important; }
+      #preview-container { margin-top: 2px !important; }
+      
+      /* Balance: 90px para que se vea, pero sin que quiebre a la página 2 */
+      #foto-preview { max-height: 90px !important; width: auto !important; max-width: 100%; object-fit: contain; border-radius: 2px; }
     }
   </style>
 </head>
