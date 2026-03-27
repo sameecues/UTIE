@@ -220,7 +220,7 @@
         line-height: 1.05; 
         color: #0f172a; 
         max-width: 100%;
-        zoom: 0.88; /* Forzamos una reducción mayor para el navegador */
+        zoom: 0.88; 
       }
       
       .fab-container, .btn-select-all { display: none !important; } 
@@ -247,7 +247,6 @@
       
       .card { padding: 3px 4px; border: 1px solid #cbd5e1; border-radius: 3px; break-inside: avoid; }
       
-      /* APLASTAMOS EL ESPACIO QUE GENERA EL CARD-HEADER AL IMPRIMIR */
       .card-header { padding-bottom: 1px; margin-bottom: 2px; border-bottom: 1px solid #e2e8f0; }
       .card h2 { font-size: 8px; padding-bottom: 0;}
 
@@ -264,10 +263,10 @@
       .card[style="margin-top:10px;"] { margin-top: 2px !important; }
       textarea { min-height: 14px; height: 14px; border-bottom: 1px solid #cbd5e1; }
 
-      label[for="foto-interior"] { display: none !important; }
+      /* Ocultamos los botones de cámara y galería al imprimir */
+      #botones-foto { display: none !important; }
       #preview-container { margin-top: 2px !important; }
       
-      /* Balance: 90px para que se vea, pero sin que quiebre a la página 2 */
       #foto-preview { max-height: 90px !important; width: auto !important; max-width: 100%; object-fit: contain; border-radius: 2px; }
     }
   </style>
@@ -411,8 +410,18 @@
     <div class="card">
       <div class="card-header"><h2>REGISTRO - CARDIO</h2></div>
       <div class="form-group">
-        <label for="foto-interior" style="text-align:center; padding: 8px; cursor: pointer; border-radius: 4px; border: 1px solid var(--primary); color: var(--primary); display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: bold;">📷 Tomar Foto</label>
-        <input type="file" id="foto-interior" accept="image/*" capture="environment" style="display: none;">
+        <div id="botones-foto" style="display: flex; gap: 10px; margin-bottom: 5px;">
+          <label for="foto-interior-cam" style="flex: 1; text-align:center; padding: 8px; cursor: pointer; border-radius: 4px; border: 1px solid var(--primary); color: var(--primary); font-size: 0.85rem; font-weight: bold;">
+            📷 Tomar
+          </label>
+          <input type="file" id="foto-interior-cam" accept="image/*" capture="environment" style="display: none;">
+          
+          <label for="foto-interior-gal" style="flex: 1; text-align:center; padding: 8px; cursor: pointer; border-radius: 4px; border: 1px solid var(--success); color: var(--success); font-size: 0.85rem; font-weight: bold;">
+            🖼️ Subir
+          </label>
+          <input type="file" id="foto-interior-gal" accept="image/*" style="display: none;">
+        </div>
+
         <div id="preview-container" style="display: none; text-align: center;">
           <img id="foto-preview" src="" style="width: 100%; max-height: 250px; object-fit: contain; border-radius: 6px; border: 1px solid var(--border); background: #f1f5f9;">
           <button type="button" onclick="borrarFoto()" class="bg-red" style="margin-top: 8px; padding: 6px; font-size: 0.75rem; width: 100%; border-radius: 4px; border:none; color:white;">Borrar</button>
@@ -427,8 +436,8 @@
     document.addEventListener("DOMContentLoaded", () => {
       if (localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark-mode');
       
-      // Asignar IDs únicos a todos los inputs que no lo tengan
-      const allInputs = document.querySelectorAll('input, textarea');
+      // EXCLUIMOS LOS INPUTS DE TIPO FILE PARA QUE NO DEN ERROR AL GUARDAR
+      const allInputs = document.querySelectorAll('input:not([type="file"]), textarea');
       allInputs.forEach((input, index) => {
         if (!input.id) input.id = 'input-auto-' + index;
         
@@ -450,19 +459,18 @@
       }
     });
 
-    // Función corregida: Selecciona todos los checkboxes dentro de la tarjeta actual
     function selectAllInCard(btn) {
       const card = btn.closest('.card');
       const checks = card.querySelectorAll('input[type="checkbox"]');
       checks.forEach(checkbox => {
         checkbox.checked = true;
-        // Disparar el evento manual para que se guarde en el LocalStorage
         const event = new Event('change');
         checkbox.dispatchEvent(event);
       });
     }
 
-    document.getElementById('foto-interior').addEventListener('change', function(e) {
+    // Función unificada para procesar la imagen (ya sea de cámara o de galería)
+    function procesarImagen(e) {
       const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
@@ -488,12 +496,19 @@
         img.src = event.target.result;
       };
       reader.readAsDataURL(file);
-    });
+    }
+
+    // Asignamos la misma función a ambos botones
+    document.getElementById('foto-interior-cam').addEventListener('change', procesarImagen);
+    document.getElementById('foto-interior-gal').addEventListener('change', procesarImagen);
 
     function borrarFoto() {
       document.getElementById('foto-preview').src = "";
       document.getElementById('preview-container').style.display = 'none';
       localStorage.removeItem('foto-interior-data');
+      // Limpiar los valores de los inputs para poder subir la misma foto de nuevo si se desea
+      document.getElementById('foto-interior-cam').value = "";
+      document.getElementById('foto-interior-gal').value = "";
     }
 
     function toggleDarkMode() {
