@@ -212,13 +212,22 @@
        DISEÑO IMPRESIÓN SÚPER COMPRIMIDO PARA 1 PÁGINA
        ========================================= */
     @media print {
+      /* FORZAR SIEMPRE MODO CLARO EN EL PDF */
+      body.dark-mode {
+        --bg: #f8fafc;
+        --card-bg: #ffffff;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --border: #cbd5e1;
+      }
+
       @page { size: A4; margin: 3mm 5mm; }
       
       body { 
-        background: white; padding: 0; 
+        background: white !important; padding: 0; 
         font-size: 7.5px; 
         line-height: 1.05; 
-        color: #0f172a; 
+        color: #0f172a !important; 
         max-width: 100%;
         zoom: 0.88; 
       }
@@ -234,7 +243,7 @@
         padding: 3px 6px; gap: 4px; background-color: #f8fafc !important;
       }
       .header-col { gap: 2px; }
-      .form-group label { font-size: 6.5px; margin-bottom: 0px;}
+      .form-group label { font-size: 6.5px; margin-bottom: 0px; color: #475569 !important;}
       .form-group input, textarea { 
         border: none; border-bottom: 1px dashed #cbd5e1; border-radius: 0; 
         padding: 0; font-size: 8px; background: transparent !important; color: #0f172a !important; font-weight: bold;
@@ -242,26 +251,27 @@
       
       .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 2px; }
       
-      .section-title { padding: 2px 6px; margin-top: 1px; font-size: 8.5px; border-radius: 2px; }
-      .sub-section-title { padding: 1.5px 6px; margin-top: 1px; font-size: 8px; border-radius: 2px; }
+      /* Forzar colores explícitos en los títulos */
+      .section-title { padding: 2px 6px; margin-top: 1px; font-size: 8.5px; border-radius: 2px; background-color: #1e293b !important; color: white !important; }
+      .sub-section-title { padding: 1.5px 6px; margin-top: 1px; font-size: 8px; border-radius: 2px; background-color: #e2e8f0 !important; color: #1e293b !important; }
       
-      .card { padding: 3px 4px; border: 1px solid #cbd5e1; border-radius: 3px; break-inside: avoid; }
+      .card { padding: 3px 4px; border: 1px solid #cbd5e1; border-radius: 3px; break-inside: avoid; background-color: white !important; }
       
       .card-header { padding-bottom: 1px; margin-bottom: 2px; border-bottom: 1px solid #e2e8f0; }
       .card h2 { font-size: 8px; padding-bottom: 0;}
 
       .precinto-group { margin-bottom: 2px; padding-bottom: 1px; border-bottom: 1px solid #e2e8f0; gap: 3px;}
       .precinto-group label { font-size: 8px; }
-      .precinto-input { font-size: 8px; border: none; border-bottom: 1px dotted #cbd5e1; padding: 0; height: auto;}
+      .precinto-input { font-size: 8px; border: none; border-bottom: 1px dotted #cbd5e1; padding: 0; height: auto; color: #0f172a !important;}
       
       .check-item { border-bottom: 1px solid #f1f5f9; padding: 0.5px 0; }
       .check-item:last-child { border-bottom: none; }
       .check-item input[type="checkbox"] { width: 8px; height: 8px; margin-right: 3px; }
-      .check-item .label-text { font-size: 7.5px; color: #0f172a; }
-      .qty-input { border: 1px solid #e2e8f0; border-radius: 2px; width: 20px; padding: 0; font-size: 7.5px; height: auto; }
+      .check-item .label-text { font-size: 7.5px; color: #0f172a !important; }
+      .qty-input { border: 1px solid #e2e8f0; border-radius: 2px; width: 20px; padding: 0; font-size: 7.5px; height: auto; background-color: white !important; color: #0f172a !important;}
 
       .card[style="margin-top:10px;"] { margin-top: 2px !important; }
-      textarea { min-height: 14px; height: 14px; border-bottom: 1px solid #cbd5e1; }
+      textarea { min-height: 14px; height: 14px; border-bottom: 1px solid #cbd5e1; color: #0f172a !important;}
 
       /* Ocultamos los botones de cámara y galería al imprimir */
       #botones-foto { display: none !important; }
@@ -361,7 +371,7 @@
     
     <div class="card">
       <div class="card-header"><h2>Bolso Verde 1</h2><button class="btn-select-all" onclick="selectAllInCard(this)">Todos</button></div>
-      <div class="precinto-group"><label>Nº Precinto:</label><input type="text" id="precinto-v1" class="precinto-input" placeholder="Ej: 0015557"></div>
+      <div class="precinto-group"><label>Nº Precinto:</label><input type="text" id="precinto-v1" class="precinto-input" placeholder="Ej: 12345"></div>
       <label class="check-item"><input type="checkbox"><span class="label-text">Gasas, vendas</span><input type="text" class="qty-input" value=">10"></label>
       <label class="check-item"><input type="checkbox"><span class="label-text">Collares cervicales</span><input type="text" class="qty-input" value="6"></label>
       <label class="check-item"><input type="checkbox"><span class="label-text">Solución fisiológica</span><input type="text" class="qty-input" value="2"></label>
@@ -372,7 +382,7 @@
 
     <div class="card">
       <div class="card-header"><h2>Bolso Verde 2</h2><button class="btn-select-all" onclick="selectAllInCard(this)">Todos</button></div>
-      <div class="precinto-group"><label>Nº Precinto:</label><input type="text" id="precinto-v2" class="precinto-input" placeholder="Ej: 0015521"></div>
+      <div class="precinto-group"><label>Nº Precinto:</label><input type="text" id="precinto-v2" class="precinto-input" placeholder="Ej: 67890"></div>
       <label class="check-item"><input type="checkbox"><span class="label-text">Ambú adulto</span><input type="text" class="qty-input" value="1"></label>
       <label class="check-item"><input type="checkbox"><span class="label-text">Ambú pediátrico</span><input type="text" class="qty-input" value="1"></label>
       <label class="check-item"><input type="checkbox"><span class="label-text">Estuche Laringo</span><input type="text" class="qty-input" value="1"></label>
@@ -389,7 +399,7 @@
 
     <div class="card">
       <div class="card-header"><h2>Interior</h2><button class="btn-select-all" onclick="selectAllInCard(this)">Todos</button></div>
-      <div class="precinto-group"><label>Nº Precinto Cardio:</label><input type="text" id="precinto-cardio" class="precinto-input" placeholder="Ej: 0015557"></div>
+      <div class="precinto-group"><label>Nº Precinto Cardio:</label><input type="text" id="precinto-cardio" class="precinto-input" placeholder="Ej: 11223"></div>
       <label class="check-item"><input type="checkbox"><span class="label-text">Cardio</span><input type="text" class="qty-input" value="Funciona"></label>
       <label class="check-item"><input type="checkbox"><span class="label-text">Monitores x2</span><input type="text" class="qty-input" value="Funciona"></label>
       <label class="check-item"><input type="checkbox"><span class="label-text">1 PC</span><input type="text" class="qty-input" value="Funciona"></label>
