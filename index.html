@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=0.80, maximum-scale=0.80, user-scalable=no">
-  <title>Checklist UTIe Oficial</title>
+  <title>Checklist UTIe</title>
 
   <style>
     :root {
@@ -73,10 +73,13 @@
        DISEÑO IMPRESIÓN FORZADO 1 PÁGINA (iPHONE FIX)
        ========================================= */
     @media print {
-      @page { size: A4; margin: 2mm 4mm; }
+      @page { 
+        size: A4; 
+        margin: 0mm; /* ESTO OCULTA LA URL, HORA Y NÚMERO DE PÁGINA DEL NAVEGADOR */
+      }
       
       body { 
-        padding: 0 !important; 
+        padding: 5mm !important; /* Margen interno para que no toque los bordes físicos */
         margin: 0 !important; 
         background: white !important; 
         font-size: 9px !important; 
@@ -164,7 +167,7 @@
     </button>
   </div>
 
-<header>
+ <header>
     <img src="https://i.imgur.com/GXTFolo.png" alt="SAME">
     <h1>CHECKLIST UTIE</h1>
     <img src="https://i.imgur.com/W5Mo4rc.png" alt="ECUES">
@@ -289,7 +292,6 @@
     <label style="font-size:0.6rem; font-weight:900; color:var(--text-muted); text-transform:uppercase;">Observaciones</label>
     <textarea id="obs" style="width:100%; min-height:50px; border:none; background:var(--bg); padding:8px; border-radius:4px; margin-top:5px; font-size:0.8rem;" placeholder="Escriba aquí..."></textarea>
   </div>
-
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
