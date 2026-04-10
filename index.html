@@ -70,85 +70,108 @@
     .btn-gallery { background: var(--success); }
 
     /* =========================================
-       DISEÑO IMPRESIÓN FORZADO 1 PÁGINA (iPHONE FIX)
+       DISEÑO IMPRESIÓN FORZADO 1 PÁGINA (GARANTIZADO)
        ========================================= */
     @media print {
       @page { 
         size: A4; 
-        margin: 0mm; /* ESTO OCULTA LA URL, HORA Y NÚMERO DE PÁGINA DEL NAVEGADOR */
+        margin: 0;
+      }
+      
+      html, body {
+        width: 210mm;
+        height: 297mm;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        background: white !important;
+        box-sizing: border-box;
       }
       
       body { 
-        padding: 5mm !important; /* Margen interno para que no toque los bordes físicos */
-        margin: 0 !important; 
-        background: white !important; 
-        font-size: 9px !important; 
+        padding: 8mm 10mm !important;
+        font-size: 8.5px !important; 
         line-height: 1.0 !important;
-        -webkit-print-color-adjust: exact;
+        color: black !important;
+        -webkit-print-color-adjust: exact; 
+        print-color-adjust: exact;
       }
       
       .fab-container, #botones-foto, .borrar-btn, .btn-select-all { display: none !important; }
       
-      header { margin-bottom: 4px; }
-      header img { max-height: 30px; }
-      h1 { font-size: 14px; margin: 0; }
+      header { margin-bottom: 3px !important; padding-bottom: 0 !important; }
+      header img { max-height: 25px !important; }
+      h1 { font-size: 13px !important; margin: 0 !important; }
 
       .header-form { 
         grid-template-columns: repeat(4, 1fr) !important; 
-        padding: 5px !important; 
-        margin-bottom: 5px !important; 
-        border: 1px solid #ddd !important;
-        gap: 5px !important;
+        padding: 4px !important; 
+        margin-bottom: 3px !important; 
+        border: 1px solid #ccc !important;
+        gap: 4px !important;
+        box-shadow: none !important;
+        border-top: 1px solid #ccc !important;
       }
-      .form-group label { font-size: 7px; }
-      .form-group input { font-size: 9px; padding: 2px; }
+      .form-group label { font-size: 6.5px !important; margin-bottom: 0 !important; color: #475569 !important;}
+      .form-group input { font-size: 8.5px !important; padding: 1px 2px !important; border: none !important; border-bottom: 1px dotted #ccc !important; background: transparent !important; color: black !important;}
 
       .grid { 
         display: grid !important; 
         grid-template-columns: repeat(3, 1fr) !important; 
-        gap: 4px !important; 
-      }
-      
-      .card { 
-        break-inside: avoid; 
-        padding: 4px !important; 
-        border: 1px solid #eee !important;
-        margin-bottom: 0px !important;
+        gap: 3px !important; 
       }
       
       .section-title { 
-        margin: 5px 0 2px 0 !important; 
+        margin: 3px 0 2px 0 !important; 
         font-size: 8px !important; 
-        padding: 2px 6px !important; 
+        padding: 2px 4px !important; 
+        background: #0f172a !important;
+        color: white !important;
       }
       
-      .card-header { margin-bottom: 3px; padding-bottom: 2px; }
-      .card h2 { font-size: 8px; }
-
-      .check-item { padding: 1px 0 !important; }
-      .check-item input[type="checkbox"] { width: 10px; height: 10px; margin-right: 4px; }
-      .check-item .label-text { font-size: 8px !important; }
-      .qty-input { width: 30px; font-size: 8px; height: 12px; border: none; }
+      .card { 
+        break-inside: avoid !important; 
+        padding: 3px 4px !important; 
+        border: 1px solid #cbd5e1 !important;
+        margin-bottom: 0px !important;
+        box-shadow: none !important;
+        border-radius: 2px !important;
+        background: white !important;
+      }
       
-      .precinto-box { padding: 2px 5px; margin-bottom: 3px; }
-      .precinto-box label { font-size: 7px; }
-      .precinto-box input { font-size: 8px; }
+      .card-header { margin-bottom: 2px !important; padding-bottom: 1px !important; border-bottom: 1px solid #e2e8f0 !important; }
+      .card h2 { font-size: 7.5px !important; color: #0891b2 !important; }
+
+      .check-item { padding: 0.5px 0 !important; border-bottom: 1px solid #f1f5f9 !important; }
+      .check-item input[type="checkbox"] { width: 9px !important; height: 9px !important; margin-right: 3px !important; }
+      .check-item .label-text { font-size: 7.5px !important; color: black !important; }
+      .qty-input { width: 22px !important; font-size: 7.5px !important; height: auto !important; padding: 0 !important; border: 1px solid #e2e8f0 !important; background: white !important; color: black !important;}
+      
+      .precinto-box { padding: 1px 3px !important; margin-bottom: 2px !important; background: transparent !important; border: none !important; border-bottom: 1px solid #e2e8f0 !important; border-radius: 0 !important;}
+      .precinto-box label { font-size: 7px !important; color: #0891b2 !important; }
+      .precinto-box input { font-size: 7.5px !important; padding: 0 !important; color: black !important;}
 
       #preview-container { margin-top: 2px !important; }
       #foto-preview { 
-        max-height: 85px !important; 
+        max-height: 80px !important;
         width: auto !important; 
-        border: 1px solid #ddd;
-        margin: 0 auto;
-        display: block;
+        max-width: 100% !important;
+        border: 1px solid #ccc !important;
+        margin: 0 auto !important;
+        display: block !important;
+        border-radius: 2px !important;
       }
       
-      .card:has(textarea) { margin-top: 5px !important; }
+      .card:has(textarea) { margin-top: 3px !important; border-left: 1px solid #cbd5e1 !important; }
       textarea { 
-        min-height: 35px !important; 
-        height: 35px !important; 
+        min-height: 25px !important; 
+        height: 25px !important; 
         font-size: 8px !important; 
-        padding: 4px !important;
+        padding: 2px !important;
+        border: 1px solid #e2e8f0 !important;
+        background: white !important;
+        color: black !important;
+        margin-top: 2px !important;
       }
     }
   </style>
