@@ -69,21 +69,84 @@
     .btn-camera { background: var(--primary); }
     .btn-gallery { background: var(--success); }
 
+    /* =========================================
+       DISEÑO IMPRESIÓN FORZADO 1 PÁGINA (iPHONE FIX)
+       ========================================= */
     @media print {
-      @page { size: A4; margin: 3mm 5mm; }
-      body { padding: 0; background: white; zoom: 0.72; color: black; }
+      @page { size: A4; margin: 2mm 4mm; }
+      
+      body { 
+        padding: 0 !important; 
+        margin: 0 !important; 
+        background: white !important; 
+        font-size: 9px !important; 
+        line-height: 1.0 !important;
+        -webkit-print-color-adjust: exact;
+      }
+      
       .fab-container, #botones-foto, .borrar-btn, .btn-select-all { display: none !important; }
-      header { margin-bottom: 5px; }
-      header img { max-height: 35px; }
-      h1 { font-size: 1rem; }
-      .header-form { grid-template-columns: repeat(4, 1fr); padding: 8px; margin-bottom: 5px; border: 1px solid #ccc; }
-      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
-      .card { break-inside: avoid; padding: 5px; border: 1px solid #ddd; }
-      .section-title { margin: 6px 0 3px 0; font-size: 0.6rem; padding: 2px 8px; }
-      .check-item .label-text { font-size: 0.65rem; }
-      .qty-input { border: none; width: 35px; font-size: 0.65rem; }
-      #foto-preview { max-height: 90px !important; width: auto !important; }
-      textarea { height: 35px !important; font-size: 0.65rem; }
+      
+      header { margin-bottom: 4px; }
+      header img { max-height: 30px; }
+      h1 { font-size: 14px; margin: 0; }
+
+      .header-form { 
+        grid-template-columns: repeat(4, 1fr) !important; 
+        padding: 5px !important; 
+        margin-bottom: 5px !important; 
+        border: 1px solid #ddd !important;
+        gap: 5px !important;
+      }
+      .form-group label { font-size: 7px; }
+      .form-group input { font-size: 9px; padding: 2px; }
+
+      .grid { 
+        display: grid !important; 
+        grid-template-columns: repeat(3, 1fr) !important; 
+        gap: 4px !important; 
+      }
+      
+      .card { 
+        break-inside: avoid; 
+        padding: 4px !important; 
+        border: 1px solid #eee !important;
+        margin-bottom: 0px !important;
+      }
+      
+      .section-title { 
+        margin: 5px 0 2px 0 !important; 
+        font-size: 8px !important; 
+        padding: 2px 6px !important; 
+      }
+      
+      .card-header { margin-bottom: 3px; padding-bottom: 2px; }
+      .card h2 { font-size: 8px; }
+
+      .check-item { padding: 1px 0 !important; }
+      .check-item input[type="checkbox"] { width: 10px; height: 10px; margin-right: 4px; }
+      .check-item .label-text { font-size: 8px !important; }
+      .qty-input { width: 30px; font-size: 8px; height: 12px; border: none; }
+      
+      .precinto-box { padding: 2px 5px; margin-bottom: 3px; }
+      .precinto-box label { font-size: 7px; }
+      .precinto-box input { font-size: 8px; }
+
+      #preview-container { margin-top: 2px !important; }
+      #foto-preview { 
+        max-height: 85px !important; 
+        width: auto !important; 
+        border: 1px solid #ddd;
+        margin: 0 auto;
+        display: block;
+      }
+      
+      .card:has(textarea) { margin-top: 5px !important; }
+      textarea { 
+        min-height: 35px !important; 
+        height: 35px !important; 
+        font-size: 8px !important; 
+        padding: 4px !important;
+      }
     }
   </style>
 </head>
@@ -101,7 +164,7 @@
     </button>
   </div>
 
- <header>
+<header>
     <img src="https://i.imgur.com/GXTFolo.png" alt="SAME">
     <h1>CHECKLIST UTIE</h1>
     <img src="https://i.imgur.com/W5Mo4rc.png" alt="ECUES">
@@ -227,6 +290,7 @@
     <textarea id="obs" style="width:100%; min-height:50px; border:none; background:var(--bg); padding:8px; border-radius:4px; margin-top:5px; font-size:0.8rem;" placeholder="Escriba aquí..."></textarea>
   </div>
 
+
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       if(!document.getElementById('fecha').value) {
@@ -258,7 +322,6 @@
       const checks = card.querySelectorAll('input[type="checkbox"]');
       checks.forEach(checkbox => {
         checkbox.checked = true;
-        // Disparar evento change para que se guarde en localStorage
         const event = new Event('change');
         checkbox.dispatchEvent(event);
       });
