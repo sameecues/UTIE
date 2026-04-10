@@ -73,23 +73,26 @@
        DISEÑO IMPRESIÓN FORZADO 1 PÁGINA (GARANTIZADO)
        ========================================= */
     @media print {
+      /* 1. ELIMINAR ENCABEZADOS, URL Y PIES DE PÁGINA */
       @page { 
         size: A4; 
-        margin: 0;
+        margin: 0; /* Al poner 0, el navegador no tiene donde escribir los links */
       }
       
+      /* 2. FORZAR 1 SOLA PÁGINA Y BLOQUEAR LA SEGUNDA */
       html, body {
         width: 210mm;
-        height: 297mm;
+        height: 297mm; /* Alto exacto de A4 */
         margin: 0 !important;
         padding: 0 !important;
-        overflow: hidden !important;
+        overflow: hidden !important; /* Magia: Bloquea la creación de la página 2 */
         background: white !important;
         box-sizing: border-box;
       }
       
+      /* 3. MARGEN INTERNO VISUAL */
       body { 
-        padding: 8mm 10mm !important;
+        padding: 8mm 10mm !important; /* Espacio para que no toque el borde del papel */
         font-size: 8.5px !important; 
         line-height: 1.0 !important;
         color: black !important;
@@ -153,7 +156,7 @@
 
       #preview-container { margin-top: 2px !important; }
       #foto-preview { 
-        max-height: 80px !important;
+        max-height: 80px !important; /* Controlamos la foto para que no desborde */
         width: auto !important; 
         max-width: 100% !important;
         border: 1px solid #ccc !important;
