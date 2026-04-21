@@ -399,7 +399,6 @@
 
     function imprimirConTitulo() {
       const tituloOriginal = document.title;
-      
       const fechaInput = document.getElementById('fecha').value;
       let fechaObj;
       
@@ -415,12 +414,14 @@
       const anio = fechaObj.getFullYear();
       const diasSemana = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
       const diaSemana = diasSemana[fechaObj.getDay()];
-      
-      document.title = `${dia}-${mes}-${anio} (${diaSemana})`;
-      
-      window.print();
-      
-      setTimeout(() => { document.title = tituloOriginal; }, 500);
+      const nuevoTitulo = `${dia}-${mes}-${anio} (${diaSemana})`;
+      document.title = nuevoTitulo;
+      setTimeout(() => {
+        window.print();
+        setTimeout(() => { 
+          document.title = tituloOriginal; 
+        }, 3000);
+      }, 200);
     }
   </script>
 </body>
