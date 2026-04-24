@@ -170,13 +170,15 @@
       .card:has(textarea) { margin-top: 3px !important; border-left: 1px solid #cbd5e1 !important; }
       textarea { 
         min-height: 25px !important; 
-        height: 25px !important; 
+        height: auto !important; 
+        overflow: visible !important;
         font-size: 8px !important; 
         padding: 2px !important;
         border: 1px solid #e2e8f0 !important;
         background: white !important;
         color: black !important;
         margin-top: 2px !important;
+        resize: none !important;
       }
     }
   </style>
@@ -326,6 +328,22 @@
     document.addEventListener("DOMContentLoaded", () => {
       if(!document.getElementById('fecha').value) {
         document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+      const obsTextarea = document.getElementById('obs');
+      
+      function autoResize() {
+        this.style.height = 'auto'; // Resetea la altura
+        this.style.height = (this.scrollHeight) + 'px'; // Ajusta al contenido real
+      }
+      
+      // Que se ejecute cada vez que escribes
+      obsTextarea.addEventListener('input', autoResize);
+      
+      // Que se ejecute al cargar la página por si hay texto guardado
+      setTimeout(() => {
+        obsTextarea.style.height = 'auto';
+        obsTextarea.style.height = (obsTextarea.scrollHeight) + 'px';
+      }, 100);
+        
       }
       
       const allInputs = document.querySelectorAll('input:not([type="file"]), textarea');
